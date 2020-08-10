@@ -5,9 +5,11 @@ const d_value = Utilities.formatDate( date, 'Asia/Tokyo', 'yyyy/MM/dd');
 function set_trigger() {
   const active_cell = SS.getActiveCell();
   var   search_word;
-  const column = active_cell.getColumn(); // 列番号
-  const row = active_cell.getRow(); // 行番号
+  const column = active_cell.getColumn();
+  const row = active_cell.getRow();
   
+  if (row == 1)
+    return ;
   if (column == 1)
   {
     search_word = SS.getRange(row, column).getValue();
@@ -15,6 +17,9 @@ function set_trigger() {
   }
   if (column == 6)
   {
+     // 以下は、ドキュメントを見終わった後に見て。
+     // ここの「完」が「読了？」の列に埋めると読了日が入力される条件になる。
+     // 好きな文字で大丈夫。例：「完了」「読んだ」「done」など。
     if (SS.getRange(row, column).getValue() == '完')
       SS.getRange(row, column - 1).setValue(d_value);
     else
